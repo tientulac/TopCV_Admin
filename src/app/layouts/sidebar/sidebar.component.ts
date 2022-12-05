@@ -39,11 +39,9 @@ export class SidebarComponent implements OnInit {
 
   handleOk(): any {
     var req = {
-      account_id: this.accountInfor.account_id,
-      user_name: this.accountInfor.user_name,
+      user_name: this.emailUpdate,
       password: this.oldPassword,
-      email: this.emailUpdate
-    }
+     }
     if (!this.oldPassword && !this.confirmPassword) {
       this.toastr.warning('You must input full blank !');
       return false;
@@ -53,18 +51,15 @@ export class SidebarComponent implements OnInit {
       return false;
     }
     this.Acc.login(req).subscribe((z) => {
-      if (z) {
+      console.log(req);
+      if (z.StatusCode == 200) {
         var req2 = {
-          account_id: this.accountInfor.account_id,
-          user_name: this.accountInfor.user_name,
+          user_name: this.emailUpdate,
           password: this.newPassword,
-          email: this.emailUpdate
         }
         this.Acc.updatePassword(req2).subscribe((res) => {
           if (res) {
             this.toastr.success('Update info successfully !');
-            this.accountInfor.email = this.emailUpdate;
-            localStorage.setItem('UserInfo', JSON.stringify(this.accountInfor));
           }
           else {
             this.toastr.success('Update info failed !');

@@ -12,6 +12,8 @@ import { RoleService } from 'src/app/services/role.service';
 import { AccountService } from 'src/app/services/account.service';
 import { JobService } from 'src/app/services/job.service';
 import { DocumentCVService } from 'src/app/services/document-cv.service';
+import { UserJobService } from 'src/app/services/userJob.service';
+import { ExcelServices } from 'src/app/services/excel.service';
 
 const formatDate = (date: string | number | Date) => {
   var d = new Date(date),
@@ -56,6 +58,7 @@ export class BaseComponent {
   isDisplayImage: boolean = false;
   isDisplayDetail: boolean = false;
   isDisplayColor: boolean = false;
+  listUserJob: any;
 
   constructor(
     public titleService: Title,
@@ -70,6 +73,8 @@ export class BaseComponent {
     public accountService: AccountService,
     public jobService: JobService,
     public documentCVService: DocumentCVService,
+    public userJobService: UserJobService,
+    public excelService: ExcelServices
   ) { }
 
   listRole: any = [];
@@ -122,10 +127,18 @@ export class BaseComponent {
     this.jobService.getList().subscribe(
       (res: any) => {
         this.listJob = res.Data;
-        console.log(res);
       }
     )
   };
+
+  getListUserJob = () => {
+    this.userJobService.getList().subscribe(
+      (res: any) => {
+        this.listUserJob = res.Data;
+        console.log(res);
+      }
+    )
+  }
 
   remove_sign = (str: string) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');

@@ -46,7 +46,8 @@ registerLocaleData(en);
     JobComponent,
     DocumentCvComponent,
     UserComponent,
-    UserJobComponent
+    UserJobComponent,
+    DashboardComponent
   ],
   imports: [
     DemoNgZorroAntdModule,

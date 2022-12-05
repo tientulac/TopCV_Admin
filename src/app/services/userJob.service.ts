@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AccService {  
+export class UserJobService {  
   constructor(@Inject(AppConfig) private readonly appConfig: AppConfiguration,private router: Router,private http : HttpClient) {}
 
-  login(req: any): Observable<any> {
+  getList(): Observable<any> {
     return this.http
-      .post<any>(this.appConfig.API + 'api/account/login',req)
+      .get<any>(this.appConfig.API + 'api/userJob')
       .pipe(
         map((z) => {
           return z;
@@ -21,9 +21,29 @@ export class AccService {
       );
   }
 
-  updatePassword(req: any): Observable<any> {
+  insert(userJob: any): Observable<any> {
     return this.http
-      .post<any>(this.appConfig.API + 'api/account/updateInfo',req)
+      .post<any>(this.appConfig.API + 'api/userJob', userJob)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+    );
+  }
+
+  update(userJob: any, id: any): Observable<any> {
+    return this.http
+      .put<any>(this.appConfig.API + 'api/userJob/' + id, userJob)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+    );
+  }
+
+  delete(id: any): Observable<any> {
+    return this.http
+      .delete<any>(this.appConfig.API + 'api/userJob/' + id)
       .pipe(
         map((z) => {
           return z;

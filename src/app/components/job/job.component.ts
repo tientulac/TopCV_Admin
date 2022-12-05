@@ -64,7 +64,7 @@ export class JobComponent extends BaseComponent implements OnInit {
     this.titleModal = title;
     this.selected_ID = null;
     this.genderSelect = dataEdit.gender;
-    if (dataEdit != null) {
+    if (dataEdit) {
       this.selected_ID = dataEdit._id;
       this.AddForm.patchValue({
         job_code: !dataEdit ? '' : dataEdit.job_code,

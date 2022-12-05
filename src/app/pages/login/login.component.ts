@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         password: this.requestLogin.Password,
       };
       this.AccService.login(req).subscribe((z) => {
-        if (z) {
+        if (z.StatusCode == 200) {
           localStorage.setItem('UserInfo', JSON.stringify(z));
           this.AppService.login();
           this.toastr.success('Login successfully !');
