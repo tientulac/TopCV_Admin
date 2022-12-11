@@ -18,7 +18,7 @@ Circles.create({
 //Notify
 $.notify({
 	icon: 'flaticon-alarm-1',
-	title: 'Clothes SHOP',
+	title: 'TOP CV ADMIN',
 	message: 'HELLO !',
 },{
 	type: 'secondary',
