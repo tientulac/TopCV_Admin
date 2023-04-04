@@ -13,7 +13,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { JobService } from 'src/app/services/job.service';
 import { DocumentCVService } from 'src/app/services/document-cv.service';
 import { UserJobService } from 'src/app/services/userJob.service';
-import { ExcelServices } from 'src/app/services/excel.service';
+// import { ExcelServices } from 'src/app/services/excel.service';
 
 const formatDate = (date: string | number | Date) => {
   var d = new Date(date),
@@ -74,7 +74,7 @@ export class BaseComponent {
     public jobService: JobService,
     public documentCVService: DocumentCVService,
     public userJobService: UserJobService,
-    public excelService: ExcelServices
+    // public excelService: ExcelServices
   ) { }
 
   listRole: any = [];
@@ -109,7 +109,6 @@ export class BaseComponent {
     this.accountService.getList().subscribe(
       (res: any) => {
         this.listAccount = res.Data;
-        console.log(this.listAccount);
       }
     )
   };
@@ -118,7 +117,6 @@ export class BaseComponent {
     this.documentCVService.getList().subscribe(
       (res: any) => {
         this.listDocumentCV = res.Data;
-        console.log(this.listDocumentCV);
       }
     )
   };
@@ -135,7 +133,6 @@ export class BaseComponent {
     this.userJobService.getList().subscribe(
       (res: any) => {
         this.listUserJob = res.Data;
-        console.log(res);
       }
     )
   }

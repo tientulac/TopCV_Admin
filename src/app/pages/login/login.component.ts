@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2,NgModule } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, NgModule } from '@angular/core';
 import { AccService } from 'src/app/services/acc.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private spinner: NgxSpinnerService,
     private AccService: AccService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'login-page');
@@ -51,9 +51,25 @@ export class LoginComponent implements OnInit, OnDestroy {
       };
       this.AccService.login(req).subscribe((z) => {
         if (z.StatusCode == 200) {
-          localStorage.setItem('UserInfo', JSON.stringify(z));
-          this.AppService.login();
-          this.toastr.success('Login successfully !');
+          localStorage.setItem('UserInfo', JSON.stringify(z.Data.UserInfo));
+          if (!z.Data?.Role == null) {
+            this.toastr.warning('You are not have permission !');
+          }
+          else {
+            if (z.Data.Role?.role_code == '001') {
+              this.AppService.login();
+              this.toastr.success('Login successfully !');
+            }
+
+            if (z.Data.Role?.role_code == 'STAFF') {
+              this.AppService.loginForStaffPortal();
+              this.toastr.success('Login successfully !');
+            }
+            else {
+              this.toastr.warning('You are not have permission !');
+            }
+          }
+
         } else {
           this.toastr.warning('Login Failed !');
           localStorage.removeItem('UserInfo');

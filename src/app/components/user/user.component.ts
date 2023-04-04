@@ -56,7 +56,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.checkActive = dataEdit.active;
     this.checkAdmin = dataEdit.admin;
     if (dataEdit != null) {
-      console.log(dataEdit)
       this.selected_ID = dataEdit._id;
       this.AddForm.patchValue({
         full_name: !dataEdit ? '' : dataEdit.full_name,
