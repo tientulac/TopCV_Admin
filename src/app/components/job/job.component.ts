@@ -35,59 +35,69 @@ export class JobComponent extends BaseComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.getListJob();
+    this.getListJobByCompany(this.getInfo().company_code);
   }
 
   showConfirm(id: any): void {
-    this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
-      // nzContent: '<b>Some descriptions</b>',
-      nzOnOk: () => {
-        this.jobService.delete(id).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toastr.success('Delete Success !');
-              this.getListJob();
+    if (!this.getInfo().isVIP) {
+      this.toastr.warning('You must upgrade your account to VIP for this future !');
+    }
+    else {
+      this.modal.confirm({
+        nzTitle: '<i>Do you Want to delete these items?</i>',
+        // nzContent: '<b>Some descriptions</b>',
+        nzOnOk: () => {
+          this.jobService.delete(id).subscribe(
+            (res: any) => {
+              if (res) {
+                this.toastr.success('Delete Success !');
+                this.getListJobByCompany(this.getInfo().company_code);
+              }
+              else {
+                this.toastr.warning('Delete Fail !');
+                this.getListJobByCompany(this.getInfo().company_code);
+              }
             }
-            else {
-              this.toastr.warning('Delete Fail !');
-              this.getListJob();
-            }
-          }
-        )
-      }
-    });
+          )
+        }
+      });
+    }
   }
 
   showAddModal(title: any, dataEdit: any): void {
-    this.isDisplay = true;
-    this.titleModal = title;
-    this.selected_ID = null;
-    this.genderSelect = dataEdit.gender;
-    if (dataEdit) {
-      this.selected_ID = dataEdit._id;
-      this.AddForm.patchValue({
-        job_code: !dataEdit ? '' : dataEdit.job_code,
-        job_name: !dataEdit ? '' : dataEdit.job_name,
-        description: !dataEdit ? '' : dataEdit.description,
-        slot: !dataEdit ? '' : dataEdit.slot,
-        status: !dataEdit ? '' : dataEdit.status,
-        start_date: !dataEdit ? '' : dataEdit.start_date.substring(0,10),
-        end_date: !dataEdit ? '' : dataEdit.end_date.substring(0,10),
-        image: !dataEdit ? '' : dataEdit.image,
-        salary_min: !dataEdit ? '' : dataEdit.salary_min,
-        salary_max: !dataEdit ? '' : dataEdit.salary_max,
-        candidate: !dataEdit ? '' : dataEdit.candidate,
-        technology: !dataEdit ? '' : dataEdit.technology,
-        work_form: !dataEdit ? '' : dataEdit.work_form,
-        work_place: !dataEdit ? '' : dataEdit.work_place,
-        experience: !dataEdit ? '' : dataEdit.experience,
-        benefits: !dataEdit ? '' : dataEdit.benefits,
-        requirement: !dataEdit ? '' : dataEdit.requirement,
-      });
+    if (!this.getInfo().isVIP) {
+      this.toastr.warning('You must upgrade your account to VIP for this future !');
     }
     else {
-      this.AddForm.reset();
+      this.isDisplay = true;
+      this.titleModal = title;
+      this.selected_ID = null;
+      this.genderSelect = dataEdit.gender;
+      if (dataEdit) {
+        this.selected_ID = dataEdit._id;
+        this.AddForm.patchValue({
+          job_code: !dataEdit ? '' : dataEdit.job_code,
+          job_name: !dataEdit ? '' : dataEdit.job_name,
+          description: !dataEdit ? '' : dataEdit.description,
+          slot: !dataEdit ? '' : dataEdit.slot,
+          status: !dataEdit ? '' : dataEdit.status,
+          start_date: !dataEdit ? '' : dataEdit.start_date.substring(0, 10),
+          end_date: !dataEdit ? '' : dataEdit.end_date.substring(0, 10),
+          image: !dataEdit ? '' : dataEdit.image,
+          salary_min: !dataEdit ? '' : dataEdit.salary_min,
+          salary_max: !dataEdit ? '' : dataEdit.salary_max,
+          candidate: !dataEdit ? '' : dataEdit.candidate,
+          technology: !dataEdit ? '' : dataEdit.technology,
+          work_form: !dataEdit ? '' : dataEdit.work_form,
+          work_place: !dataEdit ? '' : dataEdit.work_place,
+          experience: !dataEdit ? '' : dataEdit.experience,
+          benefits: !dataEdit ? '' : dataEdit.benefits,
+          requirement: !dataEdit ? '' : dataEdit.requirement,
+        });
+      }
+      else {
+        this.AddForm.reset();
+      }
     }
   }
 
@@ -118,14 +128,14 @@ export class JobComponent extends BaseComponent implements OnInit {
       requirement: this.AddForm.value.requirement,
       gender: this.genderSelect,
     }
-    
+
     if (this.selected_ID) {
       req.updated_at = new Date();
       this.jobService.update(req, this.selected_ID).subscribe(
         (res: any) => {
           if (res) {
             this.toastr.success('Success !');
-            this.getListJob();
+            this.getListJobByCompany(this.getInfo().company_code);
           }
           else {
             this.toastr.success('Fail !');
@@ -140,7 +150,7 @@ export class JobComponent extends BaseComponent implements OnInit {
         (res: any) => {
           if (res) {
             this.toastr.success('Success !');
-            this.getListJob();
+            this.getListJobByCompany(this.getInfo().company_code);
           }
           else {
             this.toastr.success('Fail !');
@@ -148,7 +158,7 @@ export class JobComponent extends BaseComponent implements OnInit {
         }
       );
     }
-    
+
     this.isDisplay = false;
   }
 

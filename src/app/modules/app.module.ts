@@ -51,7 +51,8 @@ registerLocaleData(en);
     UserJobComponent,
     DashboardComponent,
     PortalCompanyComponent,
-    SidebarStaffComponent
+    SidebarStaffComponent,
+    LoginComponent
   ],
   imports: [
     DemoNgZorroAntdModule,
