@@ -119,7 +119,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   banAccount(id: any) {
-    this.accountService.updateInfor({active: false }, id).subscribe(
+    this.accountService.updateInfor({active: false, isVIP: 0 }, id).subscribe(
       (res: any) => {
         if (res) {
           this.toastr.success('Success !');
@@ -136,6 +136,20 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.accountService.updateInfor({active: true}, id).subscribe(
       (res: any) => {
         if (res) {
+          this.toastr.success('Success !');
+          this.getListAccount();
+        }
+        else {
+          this.toastr.success('Fail !');
+        }
+      }
+    );
+  }
+
+  updateVIP(id: any) {
+    this.accountService.updateInfor({isVIP: 2}, id).subscribe(
+      (res: any) => {
+        if (res.StatusCode == 200) {
           this.toastr.success('Success !');
           this.getListAccount();
         }

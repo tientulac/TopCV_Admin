@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.AppService.loginForStaffPortal();
               this.toastr.success('Login successfully !');
             }
-            else {
+            if (z.Data.Role?.role_code != '001' && z.Data.Role?.role_code != 'STAFF') {
               this.toastr.warning('You are not have permission !');
             }
           }
@@ -128,7 +128,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       active: true,
       role_code: 'STAFF',
       company_code: this.companySelect,
-      isVIP: false
+      isVIP: 0
     }
     req.created_at = new Date();
     this.accountService.register(req).subscribe(

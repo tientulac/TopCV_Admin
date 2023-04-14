@@ -65,7 +65,7 @@ export class JobComponent extends BaseComponent implements OnInit {
   }
 
   showAddModal(title: any, dataEdit: any): void {
-    if (!this.getInfo().isVIP) {
+    if (this.getInfo().isVIP != 3) {
       this.toastr.warning('You must upgrade your account to VIP for this future !');
     }
     else {

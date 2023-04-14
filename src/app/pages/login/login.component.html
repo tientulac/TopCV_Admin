@@ -12,7 +12,7 @@
 		<!-- Login Form -->
 		<form class="form-horizontal" [formGroup]="LoginForm">
 			<input type="text" id="login" class="fadeIn second" formControlName="UserName" placeholder="User name">
-			<input type="text" id="login" class="fadeIn second" formControlName="Password" placeholder="Password">
+			<input type="password" id="login" class="inputPassword fadeIn second" formControlName="Password" placeholder="Password">
 			<input type="submit" class="fadeIn fourth" value="Log In" (click)="logIn()">
 		</form>
 		<h2 style="margin-top: -30px">
@@ -43,10 +43,10 @@
 					<label class="col-md-10">Password</label>
 					<input type="password" nz-input placeholder="input.." formControlName="password" />
 				</div>
-				<div class="col-md-12">
+				<!-- <div class="col-md-12">
 					<label class="col-md-10">Date of birth</label>
 					<input type="date" class="form-control" formControlName="dob" placeholder="input..">
-				</div>
+				</div> -->
 				<div class="col-md-12" style="margin-bottom: 20px;">
 					<label class="col-md-10">Address</label>
 					<input nz-input placeholder="input.." formControlName="address" />
@@ -60,14 +60,14 @@
 									nzLabel="{{r.company_name}}"></nz-option>
 							</nz-select>
 						</div>
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
 								[ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
 								<nz-option [nzValue]="0" nzLabel="Female"></nz-option>
 								<nz-option [nzValue]="1" nzLabel="Male"></nz-option>
 								<nz-option [nzValue]="2" nzLabel="Other"></nz-option>
 							</nz-select>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
