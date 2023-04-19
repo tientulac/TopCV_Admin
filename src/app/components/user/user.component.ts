@@ -147,7 +147,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   updateVIP(id: any) {
-    this.accountService.updateInfor({isVIP: 2}, id).subscribe(
+    this.accountService.updateInfor({isVIP: 3}, id).subscribe(
       (res: any) => {
         if (res.StatusCode == 200) {
           this.toastr.success('Success !');

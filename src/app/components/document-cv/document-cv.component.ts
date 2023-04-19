@@ -18,7 +18,7 @@ export class DocumentCvComponent extends BaseComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.getListDocumentCV();
+    this.getListCVByCompany(this.getInfo().company_code);
   }
 
   showConfirm(id: any): void {

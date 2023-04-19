@@ -13,6 +13,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { JobService } from 'src/app/services/job.service';
 import { DocumentCVService } from 'src/app/services/document-cv.service';
 import { UserJobService } from 'src/app/services/userJob.service';
+import { CompanyService } from 'src/app/services/company.service';
 // import { ExcelServices } from 'src/app/services/excel.service';
 
 const formatDate = (date: string | number | Date) => {
@@ -74,6 +75,7 @@ export class BaseComponent {
     public jobService: JobService,
     public documentCVService: DocumentCVService,
     public userJobService: UserJobService,
+    public companyService: CompanyService
     // public excelService: ExcelServices
   ) { }
 
@@ -82,6 +84,7 @@ export class BaseComponent {
   listJob: any = [];
   listDocumentCV: any = [];
   company_code: any;
+  listCompany: any = [];
 
   getInfo() {
     var infoUser = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
@@ -144,15 +147,32 @@ export class BaseComponent {
   };
 
   getListUserJobByCompany = (company_code: any) => {
+    this.spinner.show();
     if (company_code?.length > 0) {
       this.userJobService.getListByCompany(company_code).subscribe(
         (res: any) => {
           this.listUserJob = res.Data;
+          this.spinner.hide();
         }
       )
     }
     else {
       this.getListUserJob();
+      this.spinner.hide();
+
+    }
+  };
+
+  getListCVByCompany = (company_code: any) => {
+    if (company_code?.length > 0) {
+      this.documentCVService.getListByCompany(company_code).subscribe(
+        (res: any) => {
+          this.listDocumentCV = res.Data;
+        }
+      )
+    }
+    else {
+      this.getListDocumentCV();
     }
   };
 
@@ -162,6 +182,14 @@ export class BaseComponent {
         this.listUserJob = res.Data;
       }
     )
+  }
+
+  getListCompany = () => {
+    this.companyService.getList().subscribe(
+      (res: any) => {
+        this.listCompany = res.Data;
+      }
+    );
   }
 
   remove_sign = (str: string) => {

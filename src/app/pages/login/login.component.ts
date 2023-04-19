@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   companySelect: any;
   listCompany: any;
 
+  selectCompany: any = true;
+  inputCompany: any = false;
+
   AddForm = new FormGroup({
     full_name: new FormControl(null),
     email: new FormControl(null),
@@ -31,6 +34,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     dob: new FormControl(null),
     address: new FormControl(null),
     password: new FormControl(null),
+  })
+
+  AddCompanyForm = new FormGroup({
+    company_code: new FormControl(null),
+    company_name: new FormControl(null),
+    description: new FormControl(null),
+    logo: new FormControl(null),
   })
 
   LoginForm = new FormGroup({
@@ -58,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   getCompany() {
     this.companyService.getList().subscribe(
       (res: any) => {
-        this.listCompany = res.Data;
+        this.listCompany = res.Data.filter((x: any) => x.status == 2);
       }
     );
   }
@@ -112,6 +122,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   registerUser() {
     this.isDisplay = true;
+    this.companySelect = null;
     this.AddForm.reset();
   }
 
@@ -127,14 +138,34 @@ export class LoginComponent implements OnInit, OnDestroy {
       admin: false,
       active: true,
       role_code: 'STAFF',
-      company_code: this.companySelect,
+      company_code: (this.selectCompany ? this.companySelect : this.AddCompanyForm.value.company_code),
       isVIP: 0
     }
     req.created_at = new Date();
     this.accountService.register(req).subscribe(
       (res: any) => {
         if (res.StatusCode == 200) {
-          this.toastr.success('Success !');
+          if (this.inputCompany) {
+            let reqCompany = {
+              company_code: this.AddCompanyForm.value.company_code,
+              company_name: this.AddCompanyForm.value.company_name,
+              description: this.AddCompanyForm.value.description,
+              logo: this.AddCompanyForm.value.logo,
+              status: 1,
+              note: '',
+              created_at: new Date()
+            }
+            this.companyService.insert(reqCompany).subscribe(
+              (res: any) => {
+                if (res.StatusCode == 200) {
+                  this.toastr.success('Success !');
+                }
+              }
+            );
+          }
+          else {
+            this.toastr.success('Success !');
+          }
         }
         else {
           this.toastr.warning(res.Message);
@@ -147,5 +178,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isDisplay = false;
+  }
+
+  showInput() {
+    this.inputCompany = true;
+    this.selectCompany = false;
+  }
+
+  showSelect() {
+    this.inputCompany = false;
+    this.selectCompany = true;
   }
 }

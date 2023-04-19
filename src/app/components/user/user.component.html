@@ -27,9 +27,9 @@
                                                 <th>Image</th>
                                                 <th>Full name</th>
                                                 <th>Email</th>
-                                                <th>Date of birth</th>
+                                                <!-- <th>Date of birth</th> -->
                                                 <th>Address</th>
-                                                <th>Gender</th>
+                                                <!-- <th>Gender</th> -->
                                                 <th>Admin</th>
                                                 <th>Active</th>
                                                 <th>VIP</th>
@@ -46,11 +46,11 @@
                                                         alt="user"></td>
                                                 <td>{{ data.full_name }}</td>
                                                 <td>{{ data.email }}</td>
-                                                <td>{{ data.dob | date: 'dd/MM/yyyy'}}</td>
+                                                <!-- <td>{{ data.dob | date: 'dd/MM/yyyy'}}</td> -->
                                                 <td>{{ data.address }}</td>
-                                                <td *ngIf="data.gender == 0">Female</td>
-                                                <td *ngIf="data.gender == 1">Male</td>
-                                                <td *ngIf="data.gender == 2">Other</td>
+                                                <!-- <td *ngIf="data.gender == 0">Female</td> -->
+                                                <!-- <td *ngIf="data.gender == 1">Male</td> -->
+                                                <!-- <td *ngIf="data.gender == 2">Other</td> -->
                                                 <td *ngIf="data.admin" style="font-weight: bold; color:green"><i
                                                         class="fa fa-check"></i></td>
                                                 <td *ngIf="!data.admin" style="font-weight: bold; color:red"><i
@@ -59,15 +59,17 @@
                                                         class="fa fa-check"></i></td>
                                                 <td *ngIf="!data.active" style="font-weight: bold; color:red"><i
                                                         class="fa fa-ban"></i></td>
-                                                <td *ngIf="data.isVIP == 0" style="font-weight: bold; color:red">X</td>
+                                                <td *ngIf="data.isVIP == 0 || !data.isVIP" style="font-weight: bold; color:red">X</td>
                                                 <td *ngIf="data.isVIP == 1"
                                                     style="font-weight: bold; color:rgb(211, 211, 40)">Waiting Accept
                                                 </td>
-                                                <td *ngIf="data.isVIP == 2" style="font-weight: bold; color:green"><i
+                                                <td *ngIf="data.isVIP == 3" style="font-weight: bold; color:green"><i
                                                         class="fa fa-check"></i></td>
-                                                <td>{{ data.role_code }}</td>
-                                                <td>{{ data.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
-                                                <td>{{ data.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td>{{ data.role_code ?? ''}}</td>
+                                                <td *ngIf="data.created_at">{{ data.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td *ngIf="data.updated_at">{{ data.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td *ngIf="!data.created_at"></td>
+                                                <td *ngIf="!data.updated_at"></td>
                                                 <td style="white-space: nowrap;">
                                                     <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;"

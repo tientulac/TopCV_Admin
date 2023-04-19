@@ -11,6 +11,7 @@ import { DashboardComponent } from '../portals/portal-admin/dashboard/dashboard.
 import { ManagementPageComponent } from '../portals/portal-admin/management-page/management-page.component';
 import { PortalCompanyComponent } from '../portals/portal-company/portal-company.component';
 import { NonAuthGuard } from '../utils/guards/non-auth.guard';
+import { CompanyComponent } from '../components/company/company.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
       {
         path: 'user-job',
         component: UserJobComponent, 
+      },
+      {
+        path: 'company',
+        component: CompanyComponent, 
       },
     ]
   },

@@ -12,7 +12,8 @@
 		<!-- Login Form -->
 		<form class="form-horizontal" [formGroup]="LoginForm">
 			<input type="text" id="login" class="fadeIn second" formControlName="UserName" placeholder="User name">
-			<input type="password" id="login" class="inputPassword fadeIn second" formControlName="Password" placeholder="Password">
+			<input type="password" id="login" class="inputPassword fadeIn second" formControlName="Password"
+				placeholder="Password">
 			<input type="submit" class="fadeIn fourth" value="Log In" (click)="logIn()">
 		</form>
 		<h2 style="margin-top: -30px">
@@ -52,7 +53,8 @@
 					<input nz-input placeholder="input.." formControlName="address" />
 				</div>
 				<div class="col-md-12">
-					<div class="row">
+					<a class="col-md-12" href="javascript:void(0)" (click)="showSelect()">Select company exist in system</a>
+					<div class="row" *ngIf="selectCompany">
 						<div class="col-md-6">
 							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select company"
 								[ngModelOptions]="{standalone: true}" [(ngModel)]="companySelect">
@@ -60,14 +62,33 @@
 									nzLabel="{{r.company_name}}"></nz-option>
 							</nz-select>
 						</div>
-						<!-- <div class="col-md-6">
-							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
-								[ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
-								<nz-option [nzValue]="0" nzLabel="Female"></nz-option>
-								<nz-option [nzValue]="1" nzLabel="Male"></nz-option>
-								<nz-option [nzValue]="2" nzLabel="Other"></nz-option>
-							</nz-select>
-						</div> -->
+					</div>
+				</div>
+
+				<div class="col-md-12" style="margin-top: 20px;">
+					<a class="col-md-12" href="javascript:void(0)" (click)="showInput()">Register your company with form +</a>
+					<div class="row" *ngIf="inputCompany">
+						<form class="form-horizontal" [formGroup]="AddCompanyForm">
+							<div class="row">
+								<div class="col-md-12">
+									<label class="col-md-10 require">Code</label>
+									<input nz-input placeholder="input.." formControlName="company_code" />
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-10 require">Company Name</label>
+									<input nz-input placeholder="input.." formControlName="company_name" />
+								</div>
+								<div class="form-group">
+									<label for="comment">Description</label>
+									<textarea class="form-control" formControlName="description" rows="5">
+									</textarea>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-10 require">Logo</label>
+									<input nz-input placeholder="input.." formControlName="logo" />
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

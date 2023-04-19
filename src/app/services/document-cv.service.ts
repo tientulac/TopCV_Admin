@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class DocumentCVService {  
-  constructor(@Inject(AppConfig) private readonly appConfig: AppConfiguration,private router: Router,private http : HttpClient) {}
+export class DocumentCVService {
+  constructor(@Inject(AppConfig) private readonly appConfig: AppConfiguration, private router: Router, private http: HttpClient) { }
 
   getList(): Observable<any> {
     return this.http
@@ -28,7 +28,7 @@ export class DocumentCVService {
         map((z) => {
           return z;
         })
-    );
+      );
   }
 
   update(documentCV: any, id: any): Observable<any> {
@@ -38,12 +38,22 @@ export class DocumentCVService {
         map((z) => {
           return z;
         })
-    );
+      );
   }
 
   delete(id: any): Observable<any> {
     return this.http
       .delete<any>(this.appConfig.API + 'api/documentCV/' + id)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+
+  getListByCompany(company_code: any): Observable<any> {
+    return this.http
+      .get<any>(this.appConfig.API + 'api/documentCV/getByCompany/' + company_code)
       .pipe(
         map((z) => {
           return z;
