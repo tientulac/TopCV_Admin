@@ -92,20 +92,24 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.toastr.warning('You are not have permission !');
           }
           else {
+
             if (z.Data.Role?.role_code == '001') {
               this.AppService.login();
               this.toastr.success('Login successfully !');
             }
-
             if (z.Data.Role?.role_code == 'STAFF') {
-              this.AppService.loginForStaffPortal();
-              this.toastr.success('Login successfully !');
+              if (this.listCompany.filter((x: any) => x.company_code == z.Data.UserInfo.company_code.toString()).length > 0) {
+                this.AppService.loginForStaffPortal();
+                this.toastr.success('Login successfully !');
+              }
+              else {
+                this.toastr.warning('Your company has not registered ! Please contact to admin for accept');
+              }
             }
             if (z.Data.Role?.role_code != '001' && z.Data.Role?.role_code != 'STAFF') {
               this.toastr.warning('You are not have permission !');
             }
           }
-
         } else {
           this.toastr.warning('Login Failed !');
           localStorage.removeItem('UserInfo');
