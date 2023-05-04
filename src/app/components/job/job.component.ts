@@ -127,6 +127,7 @@ export class JobComponent extends BaseComponent implements OnInit {
       benefits: this.AddForm.value.benefits,
       requirement: this.AddForm.value.requirement,
       gender: this.genderSelect,
+      company_code: this.getInfo().company_code,
     }
 
     if (this.selected_ID) {
