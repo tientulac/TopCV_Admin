@@ -35,11 +35,11 @@ export class UserComponent extends BaseComponent implements OnInit {
           (res: any) => {
             if (res) {
               this.toastr.success('Delete Success !');
-              this.getListRole();
+              this.getListAccount();
             }
             else {
               this.toastr.warning('Delete Fail !');
-              this.getListRole();
+              this.getListAccount();
             }
           }
         )
