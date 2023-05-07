@@ -60,6 +60,8 @@ export class BaseComponent {
   isDisplayDetail: boolean = false;
   isDisplayColor: boolean = false;
   listUserJob: any;
+  isAdmin: any = false;
+  isInsert: any = false;
 
   constructor(
     public titleService: Title,
@@ -85,10 +87,27 @@ export class BaseComponent {
   listDocumentCV: any = [];
   company_code: any;
   listCompany: any = [];
+  isManager: any;
 
   getInfo() {
     var infoUser = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
     return infoUser;
+  }
+
+  checkIsAdmin() {
+    var infor = this.getInfo();
+    if (infor.role_code == '001') {
+      return this.isAdmin = true;
+    }
+    return this.isAdmin = false;
+  }
+
+  checkIsManager() {
+    var infor = this.getInfo();
+    if (infor.role_code == 'MANAGER_COMPANY') {
+      return this.isManager = true;
+    }
+    return this.isManager = false;
   }
 
   genRandonString(length: any) {
@@ -113,6 +132,14 @@ export class BaseComponent {
     this.accountService.getList().subscribe(
       (res: any) => {
         this.listAccount = res.Data;
+      }
+    )
+  };
+
+  getListAccountByCompany = () => {
+    this.accountService.getList().subscribe(
+      (res: any) => {
+        this.listAccount = res.Data.filter((x: any) => x.company_code == this.getInfo().company_code);
       }
     )
   };

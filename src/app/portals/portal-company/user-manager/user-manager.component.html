@@ -7,7 +7,7 @@
                     <h5 class="text-white op-7 mb-2">Home/Admin/User</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a *ngIf="isAdmin" href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', null)">Add new</a>
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', null)">Add new</a>
                 </div>
             </div>
         </div>
@@ -142,20 +142,12 @@
                 <br />
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="col-md-12">Role</label>
-                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select a role"
+                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select role"
                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="roleSelect">
-                                <nz-option *ngFor="let r of listRole" nzValue="{{r.role_code}}"
-                                    nzLabel="{{r.role_name}}"></nz-option>
-                            </nz-select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="col-md-12">Company</label>
-                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select company"
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="companySelect">
-                                <nz-option *ngFor="let r of listCompany" nzValue="{{r.company_code}}"
-                                    nzLabel="{{r.company_code}} - {{r.company_name}}"></nz-option>
+                                <nz-option nzValue="STAFF" nzLabel="STAFF"></nz-option>
+                                <nz-option nzValue="MANAGER_COMPANY" nzLabel="MANAGER_COMPANY"></nz-option>
                             </nz-select>
                         </div>
                     </div>

@@ -32,6 +32,7 @@ import { UserJobComponent } from '../components/user-job/user-job.component';
 import { PortalCompanyComponent } from '../portals/portal-company/portal-company.component';
 import { SidebarStaffComponent } from '../layouts/portal-staff/sidebar-staff/sidebar-staff.component';
 import { CompanyComponent } from '../components/company/company.component';
+import { UserManagerComponent } from '../portals/portal-company/user-manager/user-manager.component';
 
 registerLocaleData(en);
 
@@ -54,7 +55,8 @@ registerLocaleData(en);
     PortalCompanyComponent,
     SidebarStaffComponent,
     LoginComponent,
-    CompanyComponent
+    CompanyComponent,
+    UserManagerComponent
   ],
   imports: [
     DemoNgZorroAntdModule,

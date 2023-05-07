@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.AppService.login();
               this.toastr.success('Login successfully !');
             }
-            if (z.Data.Role?.role_code == 'STAFF') {
+            if (z.Data.Role?.role_code == 'STAFF' || z.Data.Role?.role_code == 'MANAGER_COMPANY') {
               if (this.listCompany.filter((x: any) => x.company_code == z.Data.UserInfo.company_code.toString()).length > 0) {
                 this.AppService.loginForStaffPortal();
                 this.toastr.success('Login successfully !');
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.toastr.warning('Your company has not registered ! Please contact to admin for accept');
               }
             }
-            if (z.Data.Role?.role_code != '001' && z.Data.Role?.role_code != 'STAFF') {
+            if (z.Data.Role?.role_code != '001' && z.Data.Role?.role_code != 'STAFF' && z.Data.Role?.role_code != 'MANAGER_COMPANY') {
               this.toastr.warning('You are not have permission !');
             }
           }
