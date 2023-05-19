@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -16,9 +16,9 @@ export class UserComponent extends BaseComponent implements OnInit {
   companySelect: any;
 
   AddForm = new FormGroup({
-    full_name: new FormControl(null),
-    user_name: new FormControl(null),
-    email: new FormControl(null),
+    full_name: new FormControl(null, Validators.required),
+    user_name: new FormControl(null, Validators.required),
+    email: new FormControl(null, Validators.required),
     // dob: new FormControl(null),
     address: new FormControl(null),
     company_code: new FormControl(null),
@@ -52,6 +52,16 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
   }
 
+  showConfirmUpdateVIP(id: any): void {
+    this.modal.confirm({
+      nzTitle: '<i>Do you Want to update this user to VIP?</i>',
+      // nzContent: '<b>Some descriptions</b>',
+      nzOnOk: () => {
+        this.updateVIP(id);
+      }
+    });
+  }
+
   showAddModal(title: any, dataEdit: any): void {
     this.isDisplay = true;
     this.titleModal = title;
@@ -77,7 +87,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     }
   }
 
-  handleOk(): void {
+  handleOk(): boolean {
     var req: any = {
       full_name: this.AddForm.value.full_name,
       email: this.AddForm.value.email,
@@ -92,39 +102,59 @@ export class UserComponent extends BaseComponent implements OnInit {
       updated_at: null,
       deleted_at: null,
     }
-    
-    if (this.selected_ID) {
-      req.updated_at = new Date();
-      this.accountService.updateInfor(req, this.selected_ID).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListAccount();
+    if (!req.role_code || !req.company_code) {
+      this.toastr.warning('You must select role and company');
+      return false;
+    }
+    if (this.AddForm.valid) {
+      if (this.selected_ID) {
+        req.updated_at = new Date();
+        this.accountService.updateInfor(req, this.selected_ID).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListAccount();
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
           }
-          else {
-            this.toastr.success('Fail !');
-          }
+        );
+      }
+      else {
+        req.created_at = new Date();
+        req.user_name = this.AddForm.value.user_name;
+        req.password = '123';
+        if (this.listAccount.filter((x: any) => x.user_name == req.user_name).length > 0) {
+          this.toastr.warning('The user name was existed');
+          return false;
         }
-      );
+        this.accountService.insert(req).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListAccount();
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
+          }
+        );
+      }
+      this.isDisplay = false;
+      return true;
     }
     else {
-      req.created_at = new Date();
-      req.user_name = this.AddForm.value.user_name,
-      req.password = '123';
-      this.accountService.insert(req).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListAccount();
+      {
+        Object.values(this.AddForm.controls).forEach(control => {
+          if (control.invalid) {
+            control.markAsDirty();
+            control.updateValueAndValidity({ onlySelf: true });
           }
-          else {
-            this.toastr.success('Fail !');
-          }
-        }
-      );
+        });
+        return false;
+      }
     }
-    
-    this.isDisplay = false;
   }
 
   handleCancel(): void {
@@ -133,7 +163,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   banAccount(id: any) {
-    this.accountService.updateInfor({active: false, isVIP: 0 }, id).subscribe(
+    this.accountService.updateInfor({ active: false, isVIP: 0 }, id).subscribe(
       (res: any) => {
         if (res) {
           this.toastr.success('Success !');
@@ -147,7 +177,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   activeAccount(id: any) {
-    this.accountService.updateInfor({active: true}, id).subscribe(
+    this.accountService.updateInfor({ active: true }, id).subscribe(
       (res: any) => {
         if (res) {
           this.toastr.success('Success !');
@@ -161,7 +191,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   updateVIP(id: any) {
-    this.accountService.updateInfor({isVIP: 3}, id).subscribe(
+    this.accountService.updateInfor({ isVIP: 3 }, id).subscribe(
       (res: any) => {
         if (res.StatusCode == 200) {
           this.toastr.success('Success !');

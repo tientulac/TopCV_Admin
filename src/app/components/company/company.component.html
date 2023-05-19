@@ -1,4 +1,3 @@
-<p>company works!</p>
 <div class="content">
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -8,7 +7,6 @@
                     <h5 class="text-white op-7 mb-2">Home/Admin/Company</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
                     <a href="javascript:void(0)" class="btn btn-secondary btn-round"
                         (click)="showAddModal('Add', null)">Add new</a>
                 </div>
@@ -55,7 +53,7 @@
                                                 <td>{{ data.note ?? '' }}</td>
                                                 <td>{{ data.created_at | date: 'dd/MM/yyyy hh:mm:aa' }}</td>
                                                 <td>{{ data.updated_at | date: 'dd/MM/yyyy hh:mm:aa' }}</td>
-                                                <td>
+                                                <td style="white-space: nowrap;">
                                                     <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;"
                                                         (click)="showAddModal('Update', data)">
@@ -93,23 +91,29 @@
     <ng-container *nzModalContent>
         <form class="form-horizontal" [formGroup]="AddForm">
             <div class="row">
-                <div class="col-md-12">
-                    <label class="col-md-10 require">Code</label>
-                    <input nz-input placeholder="input.." formControlName="company_code" />
-                </div>
-                <div class="col-md-12">
-                    <label class="col-md-10 require">Company Name</label>
-                    <input nz-input placeholder="input.." formControlName="company_name" />
-                </div>
+                <nz-form-item class="col-md-12">
+                    <nz-form-label nzRequired>Code</nz-form-label>
+                    <nz-form-control nzErrorTip="You must input !">
+                        <input formControlName="company_code" nz-input placeholder="input.." />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="col-md-12">
+                    <nz-form-label nzRequired>Company Name</nz-form-label>
+                    <nz-form-control nzErrorTip="You must input !">
+                        <input formControlName="company_name" nz-input placeholder="input.." />
+                    </nz-form-control>
+                </nz-form-item>
                 <div class="form-group">
                     <label for="comment">Description</label>
                     <textarea class="form-control" formControlName="description" rows="5">
                     </textarea>
                 </div>
-                <div class="col-md-12">
-                    <label class="col-md-10 require">Logo</label>
-                    <input nz-input placeholder="input.." formControlName="logo" />
-                </div>
+                <nz-form-item class="col-md-12">
+                    <nz-form-label nzRequired>Logo</nz-form-label>
+                    <nz-form-control nzErrorTip="You must input !">
+                        <input formControlName="logo" nz-input placeholder="input.." />
+                    </nz-form-control>
+                </nz-form-item>
             </div>
         </form>
     </ng-container>

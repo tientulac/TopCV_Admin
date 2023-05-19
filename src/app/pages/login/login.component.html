@@ -28,32 +28,41 @@
 	<ng-container *nzModalContent>
 		<form class="form-horizontal" [formGroup]="AddForm">
 			<div class="row">
+				<nz-form-item class="col-md-12">
+					<nz-form-label nzRequired>Full name</nz-form-label>
+					<nz-form-control nzErrorTip="You must input !">
+						<input formControlName="full_name" nz-input placeholder="input.." />
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item class="col-md-12">
+					<nz-form-label nzRequired>User name</nz-form-label>
+					<nz-form-control nzErrorTip="You must input !">
+						<input formControlName="user_name" nz-input placeholder="input.." />
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item class="col-md-12">
+					<nz-form-label nzRequired>Email</nz-form-label>
+					<nz-form-control nzErrorTip="You must input !">
+						<input formControlName="email" nz-input placeholder="input.." />
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item class="col-md-12">
+					<nz-form-label nzRequired>Password</nz-form-label>
+					<nz-form-control nzErrorTip="You must input !">
+						<nz-input-group>
+							<input type="password" nz-input placeholder="input password" formControlName="password" />
+						</nz-input-group>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item class="col-md-12" style="margin-bottom: 20px;">
+					<nz-form-label>Address</nz-form-label>
+					<nz-form-control>
+						<input formControlName="address" nz-input placeholder="input.." />
+					</nz-form-control>
+				</nz-form-item>
 				<div class="col-md-12">
-					<label class="col-md-10 require">Full name</label>
-					<input nz-input placeholder="input.." formControlName="full_name" />
-				</div>
-				<div class="col-md-12">
-					<label class="col-md-10 require">User name</label>
-					<input nz-input placeholder="input.." formControlName="user_name" />
-				</div>
-				<div class="col-md-12">
-					<label class="col-md-10">Email</label>
-					<input nz-input placeholder="input.." formControlName="email" />
-				</div>
-				<div class="col-md-12">
-					<label class="col-md-10">Password</label>
-					<input type="password" nz-input placeholder="input.." formControlName="password" />
-				</div>
-				<!-- <div class="col-md-12">
-					<label class="col-md-10">Date of birth</label>
-					<input type="date" class="form-control" formControlName="dob" placeholder="input..">
-				</div> -->
-				<div class="col-md-12" style="margin-bottom: 20px;">
-					<label class="col-md-10">Address</label>
-					<input nz-input placeholder="input.." formControlName="address" />
-				</div>
-				<div class="col-md-12">
-					<a class="col-md-12" href="javascript:void(0)" (click)="showSelect()">Select company exist in system</a>
+					<a class="col-md-12" href="javascript:void(0)" (click)="showSelect()">Select company exist in
+						system</a>
 					<div class="row" *ngIf="selectCompany">
 						<div class="col-md-6">
 							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select company"
@@ -66,12 +75,13 @@
 				</div>
 
 				<div class="col-md-12" style="margin-top: 20px;">
-					<a class="col-md-12" href="javascript:void(0)" (click)="showInput()">Register your company with form +</a>
+					<a class="col-md-12" href="javascript:void(0)" (click)="showInput()">Register your company with form
+						+</a>
 					<div class="row" *ngIf="inputCompany">
 						<form class="form-horizontal" [formGroup]="AddCompanyForm">
 							<div class="row">
 								<div class="col-md-12">
-									<label class="col-md-10 require">Code</label>
+									<label class="col-md-10 require">TAX Code</label>
 									<input nz-input placeholder="input.." formControlName="company_code" />
 								</div>
 								<div class="col-md-12">

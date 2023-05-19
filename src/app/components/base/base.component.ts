@@ -15,6 +15,7 @@ import { DocumentCVService } from 'src/app/services/document-cv.service';
 import { UserJobService } from 'src/app/services/userJob.service';
 import { CompanyService } from 'src/app/services/company.service';
 // import { ExcelServices } from 'src/app/services/excel.service';
+import * as _ from 'lodash';    
 
 const formatDate = (date: string | number | Date) => {
   var d = new Date(date),
@@ -131,7 +132,8 @@ export class BaseComponent {
   getListAccount = () => {
     this.accountService.getList().subscribe(
       (res: any) => {
-        this.listAccount = res.Data;
+        this.listAccount = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listAccount = this.listAccount.reverse();
       }
     )
   };
@@ -140,6 +142,7 @@ export class BaseComponent {
     this.accountService.getList().subscribe(
       (res: any) => {
         this.listAccount = res.Data.filter((x: any) => x.company_code == this.getInfo().company_code);
+        this.listAccount = this.listAccount.sort((a: any, b: any) => a.created_at - b.created_at);
       }
     )
   };
@@ -147,7 +150,8 @@ export class BaseComponent {
   getListDocumentCV = () => {
     this.documentCVService.getList().subscribe(
       (res: any) => {
-        this.listDocumentCV = res.Data;
+        this.listDocumentCV = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listDocumentCV = this.listDocumentCV.reverse();
       }
     )
   };
@@ -155,7 +159,8 @@ export class BaseComponent {
   getListJob = () => {
     this.jobService.getList().subscribe(
       (res: any) => {
-        this.listJob = res.Data;
+        this.listJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listJob = this.listJob.reverse();
       }
     )
   };
@@ -164,7 +169,8 @@ export class BaseComponent {
     if (company_code?.length > 0) {
       this.jobService.getListByCompany(company_code).subscribe(
         (res: any) => {
-          this.listJob = res.Data;
+          this.listJob = res.Data.sort((a: any, b: any) => a.created_at - b.created_at);
+          this.listJob = this.listJob.reverse();
         }
       )
     }
@@ -178,7 +184,8 @@ export class BaseComponent {
     if (company_code?.length > 0) {
       this.userJobService.getListByCompany(company_code).subscribe(
         (res: any) => {
-          this.listUserJob = res.Data;
+          this.listUserJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+          this.listUserJob = this.listUserJob.reverse();
           this.spinner.hide();
         }
       )
@@ -194,7 +201,8 @@ export class BaseComponent {
     if (company_code?.length > 0) {
       this.documentCVService.getListByCompany(company_code).subscribe(
         (res: any) => {
-          this.listDocumentCV = res.Data;
+          this.listDocumentCV = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+          this.listDocumentCV = this.listDocumentCV.reverse();
         }
       )
     }
@@ -206,7 +214,8 @@ export class BaseComponent {
   getListUserJob = () => {
     this.userJobService.getList().subscribe(
       (res: any) => {
-        this.listUserJob = res.Data;
+        this.listUserJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listUserJob = this.listUserJob.reverse();
       }
     )
   }
@@ -214,7 +223,8 @@ export class BaseComponent {
   getListCompany = () => {
     this.companyService.getList().subscribe(
       (res: any) => {
-        this.listCompany = res.Data;
+        this.listCompany = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listCompany = this.listCompany.reverse();
       }
     );
   }

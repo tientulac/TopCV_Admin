@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-company',
@@ -10,10 +10,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class CompanyComponent extends BaseComponent implements OnInit {
 
   AddForm = new FormGroup({
-    company_code: new FormControl(null),
-    company_name: new FormControl(null),
-    description: new FormControl(null),
-    logo: new FormControl(null),
+    company_code: new FormControl(null, Validators.required),
+    company_name: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
+    logo: new FormControl(null, Validators.required),
   })
 
   ngOnInit(): void {
@@ -69,36 +69,45 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       note: '',
     }
 
-    if (this.selected_ID) {
-      Object.assign(req, { updated_at: new Date() })
-      this.companyService.update(req, this.selected_ID).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListCompany();
+    if (this.AddForm.valid) {
+      if (this.selected_ID) {
+        Object.assign(req, { updated_at: new Date() })
+        this.companyService.update(req, this.selected_ID).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListCompany();
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
           }
-          else {
-            this.toastr.success('Fail !');
+        );
+      }
+      else {
+        Object.assign(req, { created_at: new Date() })
+        this.companyService.insert(req).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListCompany();
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
           }
-        }
-      );
+        );
+      }
+      this.isDisplay = false;
     }
     else {
-      Object.assign(req, { created_at: new Date() })
-      this.companyService.insert(req).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListCompany();
-          }
-          else {
-            this.toastr.success('Fail !');
-          }
+      Object.values(this.AddForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
         }
-      );
+      });
     }
-
-    this.isDisplay = false;
   }
 
   handleCancel(): void {
