@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   Ridrect() {
     this.AppService.login();
   }
-
   logIn() {
     if (this.LoginForm.valid) {
       this.requestLogin.UserName = this.LoginForm.value.UserName;
@@ -119,7 +118,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.toastr.warning('You are not have permission !');
             }
           }
-        } else {
+        }
+         else {
           this.toastr.warning('Login Failed !');
           localStorage.removeItem('UserInfo');
         }
@@ -140,6 +140,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleOk(): boolean {
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
     var req: any = {
       full_name: this.AddForm.value.full_name,
       user_name: this.AddForm.value.user_name,
@@ -156,6 +157,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     req.created_at = new Date();
     if (this.listAccount.filter((x: any) => x.user_name == req.user_name).length > 0) {
       this.toastr.warning('The user name was existed');
+      return false;
+    }
+    if(req.password != regex) {
+      this.toastr.warning('You must enter all characters and numbers !');
       return false;
     }
     if (!(req.company_code)) {
